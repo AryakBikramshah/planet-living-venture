@@ -1,8 +1,8 @@
-import mongoose, { Schema } from "mongoose";
-import { USER_ROLES,ROLE_VALUES } from "../constants/enums.constants.js";
+import mongoose from "mongoose";
+import { USER_ROLES, ROLE_VALUES, GENDER_VALUES } from "../constants/enums.constants.js";
 
 const userSchema = new mongoose.Schema({
-   first_name: {
+    first_name: {
         type: String,
         required: true,
         trim: true
@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         trim: true
     },
+    phone_number: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    gender: {
+        type: String,
+        enum: GENDER_VALUES,
+        required: true
+    },
     password: {
         type: String,
         required: true,
@@ -29,13 +39,11 @@ const userSchema = new mongoose.Schema({
         enum: ROLE_VALUES,
         default: USER_ROLES.USER
     },
-    profile_image:{
-        type:{
-            path: String,
-            public_id: String
-        }
+    profile_image: {
+        path: String,
+        public_id: String
     }
+}, { timestamps: true })
 
-})
 const User = mongoose.model('User', userSchema)
 export default User
